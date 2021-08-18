@@ -1,6 +1,4 @@
 import React, {useState} from 'react';
-import logo from './logo.svg';
-import './App.css';
 import ReactPaginate from 'react-paginate'; // インポートはこれで完了！
 
 function App() {
@@ -19,20 +17,6 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
       <div>
         {InfoList
         .slice(offset, offset + perPage) // 表示したいアイテムをsliceで抽出
@@ -44,7 +28,7 @@ function App() {
           )
         })}
       </div>
-      // ページネーションを置きたい箇所に以下のコンポーネントを配置
+      {/*// ページネーションを置きたい箇所に以下のコンポーネントを配置*/}
       <ReactPaginate
         previousLabel={'<'}
         nextLabel={'>'}
