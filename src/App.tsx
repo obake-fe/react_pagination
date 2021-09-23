@@ -1,7 +1,18 @@
 import React, {useState} from 'react';
-import ReactPaginate from 'react-paginate'; // インポートはこれで完了！
+import ReactPaginate from 'react-paginate';
+import {gql, useQuery} from "@apollo/client"; // インポートはこれで完了！
+
+const EXCHANGE_RATES = gql`
+  query GetExchangeRates {
+    rates(currency: "USD") {
+      currency
+      rate
+    }
+  }
+`;
 
 function App() {
+
   const [ offset, setOffset ] = useState(0); // 何番目のアイテムから表示するか
   const perPage: number = 5; // 1ページあたりに表示したいアイテムの数
   // クリック時のfunction
@@ -9,9 +20,18 @@ function App() {
     let page_number = data['selected']; // クリックした部分のページ数が{selected: 2}のような形で返ってくる
     setOffset(page_number*perPage); // offsetを変更し、表示開始するアイテムの番号を変更
   }
+
+  const { loading, error, data } = useQuery(EXCHANGE_RATES);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+
   // List data as an array of strings
-  const list = Array.from({ length: 100 }, (v, i) => i);
-  const InfoList = list.map((item) => {
+  const list = data.rates.map(({currency, rate}: any) =>
+   `${currency}：${rate}`
+  );
+  const InfoList = list.map((item: any) => {
     return {name: item}
   })
 
