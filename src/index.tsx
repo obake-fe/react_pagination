@@ -1,34 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   gql
 } from "@apollo/client";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 
 // clientオブジェクトの作成
 const client = new ApolloClient({
-  uri: 'https://48p1r2roz4.sse.codesandbox.io',
+  uri: "https://48p1r2roz4.sse.codesandbox.io",
   cache: new InMemoryCache()
 });
 
 // データ取得 → consoleに表示してみる
 client
-.query({
-  query: gql`
-    query GetRates {
-      rates(currency: "USD") {
-        currency
+  .query({
+    query: gql`
+      query GetRates {
+        rates(currency: "USD") {
+          currency
+        }
       }
-    }
-  `
-})
-.then(result => console.log(result));
-
-
+    `
+  })
+  .then((result) => console.log(result));
 
 ReactDOM.render(
   <React.StrictMode>
@@ -36,7 +34,7 @@ ReactDOM.render(
       <App />
     </ApolloProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
