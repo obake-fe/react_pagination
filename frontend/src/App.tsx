@@ -11,12 +11,17 @@ const pokemonQuery = gql`
   }
 `;
 
+ type Pokemon = {
+   id: number;
+   name: string
+ };
+
 function App() {
   const [offset, setOffset] = useState(0); // 何番目のアイテムから表示するか
   const perPage = 5; // 1ページあたりに表示したいアイテムの数
   // クリック時のfunction
-  const handlePageChange = (data: any) => {
-    const page_number = data.selected; // クリックした部分のページ数が{selected: 2}のような形で返ってくる
+  const handlePageChange = (data: { selected: number }) => {
+    const page_number = data.selected; // クリックした部分のページ数
     setOffset(page_number * perPage); // offsetを変更し、表示開始するアイテムの番号を変更
   };
 
@@ -27,17 +32,17 @@ function App() {
 
   // List data as an array of strings
   const list = data.pokemon.map(
-    ({ id, name }: any) => `${id}：${name}`
+    ({ id, name }: Pokemon) => `${id}：${name}`
   );
-  const InfoList = list.map((item: any) => ({ name: item }));
+  // const InfoList = list.map((item: string) => ({ name: item }));
 
   return (
     <div className="App">
       <div>
-        {InfoList.slice(offset, offset + perPage) // 表示したいアイテムをsliceで抽出
-          .map((el: any) => (
+        {list.slice(offset, offset + perPage) // 表示したいアイテムをsliceで抽出
+          .map((listItem: string) => (
             <div>
-              <p>{el.name}</p>
+              <p>{listItem}</p>
             </div>
           ))}
       </div>
@@ -46,7 +51,7 @@ function App() {
         previousLabel="<"
         nextLabel=">"
         breakLabel="..."
-        pageCount={Math.ceil(InfoList.length / perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
+        pageCount={Math.ceil(list.length / perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
         marginPagesDisplayed={2} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
         pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
         onPageChange={handlePageChange} // クリック時のfunction
