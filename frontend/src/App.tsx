@@ -31,18 +31,19 @@ function App() {
   if (error) return <p>Error :(</p>;
 
   // List data as an array of strings
-  const list = data.pokemon.map(
-    ({ id, name }: Pokemon) => `${id}：${name}`
-  );
+  // const list = data.pokemon.map(
+  //   ({ id, name }: Pokemon) => `${id}：${name}`
+  // );
   // const InfoList = list.map((item: string) => ({ name: item }));
 
   return (
     <div className="App">
       <div>
-        {list.slice(offset, offset + perPage) // 表示したいアイテムをsliceで抽出
-          .map((listItem: string) => (
+        {data.pokemon.slice(offset, offset + perPage) // 表示したいアイテムをsliceで抽出
+          .map((item: Pokemon) => (
             <div>
-              <p>{listItem}</p>
+              <img src={`https://laughing-cray-9d5255.netlify.app/images/dot_gif/${item.id}.gif`} alt="" />
+              <p>{`${item.id}：${item.name}`}</p>
             </div>
           ))}
       </div>
@@ -51,7 +52,7 @@ function App() {
         previousLabel="<"
         nextLabel=">"
         breakLabel="..."
-        pageCount={Math.ceil(list.length / perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
+        pageCount={Math.ceil(data.pokemon.length / perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
         marginPagesDisplayed={2} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
         pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
         onPageChange={handlePageChange} // クリック時のfunction
