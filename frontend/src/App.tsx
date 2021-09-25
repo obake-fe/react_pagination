@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { gql, useQuery } from "@apollo/client"; // インポートはこれで完了！
 
-const EXCHANGE_RATES = gql`
-  query GetExchangeRates {
-    rates(currency: "USD") {
-      currency
-      rate
-    }
+const booksQuery = gql`
+  query GetBooks {
+      books {
+          title
+          author
+      }
   }
 `;
 
@@ -20,14 +20,14 @@ function App() {
     setOffset(page_number * perPage); // offsetを変更し、表示開始するアイテムの番号を変更
   };
 
-  const { loading, error, data } = useQuery(EXCHANGE_RATES);
+  const { loading, error, data } = useQuery(booksQuery);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   // List data as an array of strings
-  const list = data.rates.map(
-    ({ currency, rate }: any) => `${currency}：${rate}`
+  const list = data.books.map(
+    ({ title, author }: any) => `${title}：${author}`
   );
   const InfoList = list.map((item: any) => ({ name: item }));
 
