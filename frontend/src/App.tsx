@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
-import { gql, useQuery } from "@apollo/client"; // インポートはこれで完了！
+import { gql, useQuery } from "@apollo/client";
+import './styles/dist/tailwind.css';
+import classNames from "classnames";
 
 const pokemonQuery = gql`
   query GetPokemon {
@@ -27,23 +29,41 @@ function App() {
 
   const { loading, error, data } = useQuery(pokemonQuery);
 
+  const slicedList = data.pokemon.slice(offset, offset + perPage) // 表示したいアイテムをsliceで抽出
+
+  // 画像のローディングアクション
+  const [imageLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    console.log("d", imageLoading);
+  }, [offset]);
+  const imageLoaded = () => {
+    setLoading(false);
+    console.log("a", imageLoading);
+  };
+
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  // List data as an array of strings
-  // const list = data.pokemon.map(
-  //   ({ id, name }: Pokemon) => `${id}：${name}`
-  // );
-  // const InfoList = list.map((item: string) => ({ name: item }));
-
   return (
-    <div className="App">
-      <div>
-        {data.pokemon.slice(offset, offset + perPage) // 表示したいアイテムをsliceで抽出
+    <div className="w-full mx-auto">
+      <div className="flex h-32">
+        {slicedList
           .map((item: Pokemon) => (
-            <div>
-              <img src={`https://laughing-cray-9d5255.netlify.app/images/dot_gif/${item.id}.gif`} alt="" />
-              <p>{`${item.id}：${item.name}`}</p>
+            <div key={item.name} className="flex flex-col justify-between w-1/5">
+              {imageLoading &&
+                <img
+                  className={classNames(imageLoading ? "block w-4 h-4 m-auto" : "hidden")}
+                  src="https://laughing-cray-9d5255.netlify.app/images/monsterball.png"
+                  alt="" />}
+              <img
+                className={classNames(!imageLoading ? "block w-auto m-auto" : "hidden")}
+                src={`https://laughing-cray-9d5255.netlify.app/images/dot_gif/${item.id}.gif`}
+                alt=""
+                onLoad={imageLoaded} />
+              <p className="text-center">{`${item.id}：${item.name}`}</p>
             </div>
           ))}
       </div>
