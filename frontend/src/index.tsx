@@ -19,10 +19,10 @@ const client = new ApolloClient({
 client
   .query({
     query: gql`
-      query GetBooks {
-        books {
-            title
-            author
+      query GetPokemon {
+        pokemon {
+            id
+            name
         }
       }
     `

@@ -1,3 +1,6 @@
+const fs = require('fs');
+const pokeJson = JSON.parse(fs.readFileSync("./pokedata.json", 'utf8'));
+
 const { ApolloServer, gql } = require('apollo-server');
 
 // A schema is a collection of type definitions (hence "typeDefs")
@@ -6,32 +9,29 @@ const { ApolloServer, gql } = require('apollo-server');
 // スキーマを定義する
 const typeDefs = gql`
 
-  type Book {
-    title: String
-    author: String
+  type Pokemon {
+    id: ID
+    name: String
   }
   
   type Query {
-    books: [Book]
+    pokemon: [Pokemon]
   }
 `;
 
 // クエリで取得するデータ
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin',
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster',
-  },
-];
+const pokeData = pokeJson.filter((json) => json.id < 152)
+.map((filteredData) => {
+  return ({
+    id: filteredData.id, name: filteredData.name.japanese
+  })
+})
+
 
 // クエリ発行時の処理を指定する
 const resolvers = {
   Query: {
-    books: () => books,
+    pokemon: () => pokeData,
   },
 };
 

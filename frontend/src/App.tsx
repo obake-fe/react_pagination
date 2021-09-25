@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { gql, useQuery } from "@apollo/client"; // インポートはこれで完了！
 
-const booksQuery = gql`
-  query GetBooks {
-      books {
-          title
-          author
+const pokemonQuery = gql`
+  query GetPokemon {
+      pokemon {
+          id
+          name
       }
   }
 `;
@@ -20,14 +20,14 @@ function App() {
     setOffset(page_number * perPage); // offsetを変更し、表示開始するアイテムの番号を変更
   };
 
-  const { loading, error, data } = useQuery(booksQuery);
+  const { loading, error, data } = useQuery(pokemonQuery);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   // List data as an array of strings
-  const list = data.books.map(
-    ({ title, author }: any) => `${title}：${author}`
+  const list = data.pokemon.map(
+    ({ id, name }: any) => `${id}：${name}`
   );
   const InfoList = list.map((item: any) => ({ name: item }));
 
