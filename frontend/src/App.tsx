@@ -29,18 +29,14 @@ function App() {
 
   const { loading, error, data } = useQuery(pokemonQuery);
 
-  const slicedList = data.pokemon.slice(offset, offset + perPage) // 表示したいアイテムをsliceで抽出
-
   // 画像のローディングアクション
   const [imageLoading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    console.log("d", imageLoading);
   }, [offset]);
   const imageLoaded = () => {
     setLoading(false);
-    console.log("a", imageLoading);
   };
 
 
@@ -50,7 +46,7 @@ function App() {
   return (
     <div className="w-full mx-auto">
       <div className="flex h-32">
-        {slicedList
+        {data.pokemon.slice(offset, offset + perPage)
           .map((item: Pokemon) => (
             <div key={item.name} className="flex flex-col justify-between w-1/5">
               {imageLoading &&
