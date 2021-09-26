@@ -45,7 +45,7 @@ function App() {
 
   return (
     <div className="w-full mx-auto">
-      <div className="flex h-32">
+      <div className="flex h-32 w-1080 m-auto">
         {data.pokemon.slice(offset, offset + perPage)
           .map((item: Pokemon) => (
             <div key={item.name} className="flex flex-col justify-between w-1/5">
