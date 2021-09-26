@@ -13,6 +13,11 @@ const pokemonQuery = gql`
   }
 `;
 
+type QueryData = {
+  id: number;
+  name: string;
+};
+
 export const MuiPagination = () => {
   // ページネーション設定
   const [offset, setOffset] = useState(0); // 何番目のアイテムから表示するか
@@ -29,6 +34,14 @@ export const MuiPagination = () => {
   const queryData = useQuery(pokemonQuery);
   const { loading, error, data } = queryData;
 
+  const pokeData =
+    data !== undefined
+      ? data.pokemon.filter((item: QueryData) => item.id > 151)
+      : data;
+
+  const count =
+    pokeData !== undefined ? Math.trunc(pokeData.length / perPage) : 0;
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
@@ -43,11 +56,11 @@ export const MuiPagination = () => {
           ②Material-UI Pagination
         </a>
       </h2>
-      <PageItems {...{ data, offset, perPage }} />
+      <PageItems {...{ pokeData, offset, perPage }} />
       {/* // ページネーションを置きたい箇所に以下のコンポーネントを配置*/}
       <div className="w-full m-auto text-center">
         <Pagination
-          count={10} // 総ページ数
+          count={count} // 総ページ数
           color="primary" // ページネーションの色
           onChange={handlePageChange} // 変更されたときに走る関数。第2引数にページ番号が入る
           page={page} // 現在のページ番号

@@ -20,7 +20,7 @@ const typeDefs = gql`
 `;
 
 // クエリで取得するデータ
-const pokeData = pokeJson.filter((json) => json.id < 152)
+const pokeData = pokeJson.filter((json) => json.id < 252)
 .map((filteredData) => {
   return ({
     id: filteredData.id, name: filteredData.name.japanese
