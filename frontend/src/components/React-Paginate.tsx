@@ -43,7 +43,7 @@ export const ReactPaginateCore = () => {
           nextLabel=">"
           breakLabel="..."
           pageCount={Math.ceil(queryData.data.pokemon.length / perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
-          marginPagesDisplayed={2} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
+          marginPagesDisplayed={0} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
           pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
           onPageChange={handlePageChange} // クリック時のfunction
           containerClassName="pagination justify-center" // ページネーションであるulに着くクラス名
