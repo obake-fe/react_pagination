@@ -6,7 +6,7 @@ import {
   ApolloProvider,
   gql
 } from "@apollo/client";
-import App from "./App";
+import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 
 // clientオブジェクトの作成
