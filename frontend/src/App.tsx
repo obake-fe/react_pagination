@@ -3,6 +3,7 @@ import ReactPaginate from "react-paginate";
 import { gql, useQuery } from "@apollo/client";
 import './styles/dist/tailwind.css';
 import classNames from "classnames";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const pokemonQuery = gql`
   query GetPokemon {
@@ -64,21 +65,29 @@ function App() {
           ))}
       </div>
       {/* // ページネーションを置きたい箇所に以下のコンポーネントを配置*/}
-      <ReactPaginate
-        previousLabel="<"
-        nextLabel=">"
-        breakLabel="..."
-        pageCount={Math.ceil(data.pokemon.length / perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
-        marginPagesDisplayed={2} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
-        pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
-        onPageChange={handlePageChange} // クリック時のfunction
-        containerClassName="pagination" // ページネーションであるulに着くクラス名
-        // subContainerClassName={'pages pagination'}
-        activeClassName="active" // アクティブなページのliに着くクラス名
-        previousClassName="pagination__previous" // 「<」のliに着けるクラス名
-        nextClassName="pagination__next" // 「>」のliに着けるクラス名
-        disabledClassName="pagination__disabled"
-      />
+      <div className="w-full m-auto">
+        <ReactPaginate
+          previousLabel="<"
+          nextLabel=">"
+          breakLabel="..."
+          pageCount={Math.ceil(data.pokemon.length / perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
+          marginPagesDisplayed={2} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
+          pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
+          onPageChange={handlePageChange} // クリック時のfunction
+          containerClassName="pagination justify-center" // ページネーションであるulに着くクラス名
+          pageClassName='page-item'
+          pageLinkClassName='page-link'
+          activeClassName="active" // アクティブなページのliに着くクラス名
+          previousClassName='page-item' // 「<」のliに着けるクラス名
+          previousLinkClassName='page-link'
+          nextClassName='page-item' // 「>」のliに着けるクラス名
+          nextLinkClassName='page-link'
+          disabledClassName='disabled'
+          breakClassName='page-item'
+          breakLinkClassName='page-link'
+        />
+      </div>
+
     </div>
   );
 }
