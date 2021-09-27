@@ -36,6 +36,7 @@
         "@typescript-eslint/indent": ["off"],
         "@typescript-eslint/prefer-interface": "off",
         "@typescript-eslint/no-use-before-define": ["error"],
+        "@typescript-eslint/no-var-requires": "off",
         "import/extensions": ["error", "never", { "json": "always" }],
         "import/no-unresolved": "off",
         "import/prefer-default-export": ["off"],

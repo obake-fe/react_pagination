@@ -10,10 +10,31 @@
     "packages": [
       "frontend",
       "server"
-    ],
-    "scripts": {
-      "cl:start": "yarn workspace client start",
-      "sr:start": "yarn workspace client start"
+    ]
+  },
+  "scripts": {
+    "cl:start": "yarn workspace frontend start",
+    "sr:start": "yarn workspace server start"
+  },
+  "devDependencies": {
+    "husky": "4",
+    "lint-staged": "^11.1.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "client/src/**/*.{js,jsx,ts,tsx}": [
+      "prettier --write --loglevel=warn",
+      "eslint --fix",
+      "eslint --max-warnings=0"
+    ],
+    "server/**/*.{js,jsx,ts,tsx}": [
+      "prettier --write --loglevel=warn",
+      "eslint --fix",
+      "eslint --max-warnings=0"
+    ]
   }
 }
