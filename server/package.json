@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "node index.ts"
+  },
   "dependencies": {
     "apollo-server": "^3.3.0",
     "graphql": "^15.6.0"

@@ -1,0 +1,19 @@
+{
+  "name": "react-pagination",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github-obake-fe:obake-fe/react_pagination.git",
+  "author": "obake-fe <daichismash@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "frontend",
+      "server"
+    ],
+    "scripts": {
+      "cl:start": "yarn workspace client start",
+      "sr:start": "yarn workspace client start"
+    }
+  }
+}
