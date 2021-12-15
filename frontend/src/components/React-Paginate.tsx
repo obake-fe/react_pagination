@@ -59,11 +59,11 @@ export const ReactPaginateCore = () => {
           nextLabel=">"
           breakLabel="..."
           pageCount={Math.ceil(pokeData.length / perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
-          marginPagesDisplayed={0} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
+          marginPagesDisplayed={1} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
           pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
           onPageChange={handlePageChange} // クリック時のfunction
           containerClassName="pagination justify-center" // ページネーションであるulに着くクラス名
-          pageClassName="page-item"
+          pageClassName="page-item w-10 text-center"
           pageLinkClassName="page-link"
           activeClassName="active" // アクティブなページのliに着くクラス名
           previousClassName="page-item" // 「<」のliに着けるクラス名
@@ -71,8 +71,8 @@ export const ReactPaginateCore = () => {
           nextClassName="page-item" // 「>」のliに着けるクラス名
           nextLinkClassName="page-link"
           disabledClassName="disabled"
-          breakClassName="page-item"
-          breakLinkClassName="page-link"
+          breakClassName="page-item w-10 text-center"
+          breakLinkClassName="page-item pointer-events-none"
         />
       </div>
     </section>
