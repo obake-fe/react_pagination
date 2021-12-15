@@ -21,7 +21,7 @@ const typeDefs = gql`
 
 // クエリで取得するデータ
 const pokeData = pokeJson
-  .filter((json) => json.id < 252)
+  .filter((json) => json.id < 387)
   .map((filteredData) => ({
     id: filteredData.id,
     name: filteredData.name.japanese

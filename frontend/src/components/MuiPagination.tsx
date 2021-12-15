@@ -36,7 +36,7 @@ export const MuiPagination = () => {
 
   const pokeData =
     data !== undefined
-      ? data.pokemon.filter((item: QueryData) => item.id > 151)
+      ? data.pokemon.filter((item: QueryData) => item.id > 251 && item.id < 387)
       : data;
 
   const count =
@@ -53,7 +53,7 @@ export const MuiPagination = () => {
           target="_blank"
           rel="noreferrer"
         >
-          ②Material-UI Pagination
+          ③Material-UI Pagination
         </a>
       </h2>
       <PageItems {...{ pokeData, offset, perPage }} />
