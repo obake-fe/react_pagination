@@ -86,10 +86,11 @@ export const RCPagination = () => {
       {/* // ページネーションを置きたい箇所に以下のコンポーネントを配置*/}
       <div className="w-full m-auto">
         <Pagination
+          pageSize={5}
           showTitle={false}
           current={current}
           onChange={handlePageChange}
-          total={200}
+          total={100}
           className="pagination justify-center"
           itemRender={itemRender}
           style={{

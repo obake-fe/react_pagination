@@ -22,10 +22,12 @@ type QueryData = {
 export const ReactPaginateCore = () => {
   // ページネーション設定
   const [offset, setOffset] = useState(0); // 何番目のアイテムから表示するか
+  const [page, setPage] = useState(0);
   const perPage = 5; // 1ページあたりに表示したいアイテムの数
   // クリック時のfunction
   const handlePageChange = (data: { selected: number }) => {
     const page_number = data.selected; // クリックした部分のページ数
+    setPage(page_number);
     setOffset(page_number * perPage); // offsetを変更し、表示開始するアイテムの番号を変更
   };
 
@@ -36,6 +38,24 @@ export const ReactPaginateCore = () => {
     data !== undefined
       ? data.pokemon.filter((item: QueryData) => item.id < 152)
       : data;
+
+  const pageCount = Math.ceil(pokeData.length / perPage);
+
+  let pageRangeDisplayed;
+
+  // ページ数が9以上のとき「...」が出現し、幅を固定する
+  if (
+    (pageCount < 10 && page <= 4) ||
+    (pageCount > 9 && page >= pageCount - 4)
+  ) {
+    pageRangeDisplayed = 7;
+  } else if (pageCount < 10 && page > 4) {
+    pageRangeDisplayed = 8;
+  } else if (page <= 3) {
+    pageRangeDisplayed = 6;
+  } else {
+    pageRangeDisplayed = 5;
+  }
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -58,9 +78,9 @@ export const ReactPaginateCore = () => {
           previousLabel="<"
           nextLabel=">"
           breakLabel="..."
-          pageCount={Math.ceil(pokeData.length / perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
+          pageCount={pageCount} // 全部のページ数。端数の場合も考えて切り上げに。
           marginPagesDisplayed={1} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
-          pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
+          pageRangeDisplayed={pageRangeDisplayed} // アクティブなページを基準にして、そこからいくつページ数を表示するか
           onPageChange={handlePageChange} // クリック時のfunction
           containerClassName="pagination justify-center" // ページネーションであるulに着くクラス名
           pageClassName="page-item w-10 text-center"
