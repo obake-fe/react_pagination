@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
 import ReactPaginate from "react-paginate";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -37,25 +37,37 @@ export const ReactPaginateCore = () => {
   const pokeData =
     data !== undefined
       ? data.pokemon.filter((item: QueryData) => item.id < 152)
-      : data;
+      : [];
 
-  const pageCount = Math.ceil(pokeData.length / perPage);
+  const [pageCount, setPageCountState] = useState(
+    Math.ceil(pokeData.length / perPage)
+  );
+  const [pageRangeDisplayed, setPageRangeDisplayed] = useState(0);
 
-  let pageRangeDisplayed;
+  const increment = () => {
+    setPageCountState(pageCount + 1);
+  };
 
-  // ページ数が9以上のとき「...」が出現し、幅を固定する
-  if (
-    (pageCount < 10 && page <= 4) ||
-    (pageCount > 9 && page >= pageCount - 4)
-  ) {
-    pageRangeDisplayed = 7;
-  } else if (pageCount < 10 && page > 4) {
-    pageRangeDisplayed = 8;
-  } else if (page <= 3) {
-    pageRangeDisplayed = 6;
-  } else {
-    pageRangeDisplayed = 5;
-  }
+  const decrement = () => {
+    if (pageCount === 1) return;
+    setPageCountState(pageCount - 1);
+  };
+
+  useEffect(() => {
+    // ページ数が9以上のとき「...」が出現し、幅を固定する
+    if (
+      (pageCount < 10 && page <= 4) ||
+      (pageCount > 9 && page >= pageCount - 4)
+    ) {
+      setPageRangeDisplayed(7);
+    } else if (pageCount < 10 && page > 4) {
+      setPageRangeDisplayed(8);
+    } else if (page <= 3) {
+      setPageRangeDisplayed(6);
+    } else {
+      setPageRangeDisplayed(5);
+    }
+  }, [page, pageCount]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -71,6 +83,8 @@ export const ReactPaginateCore = () => {
           ①react-paginate
         </a>
       </h2>
+      <button onClick={increment}>+</button>
+      <button onClick={decrement}>-</button>
       <PageItems {...{ pokeData, offset, perPage }} />
       {/* // ページネーションを置きたい箇所に以下のコンポーネントを配置*/}
       <div className="w-full m-auto">
